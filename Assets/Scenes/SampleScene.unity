@@ -519,9 +519,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28459cf4e70eca444b5a85e7e520568e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSizeX: 10
-  gridSizeY: 10
-  gridSizeZ: 10
+  gridSizeX: 20
+  gridSizeY: 20
+  gridSizeZ: 20
   voxelSize: 1
   isoLevel: 0.5
   pivotT: {fileID: 1794354087}
@@ -529,8 +529,10 @@ MonoBehaviour:
   - {fileID: 442879263}
   - {fileID: 338240969}
   mesh: {fileID: 0}
+  update: 0
   radius: 1
-  canDraw: 1
+  noiseStrength: 0.2
+  canDraw: 0
 --- !u!4 &1794354087
 Transform:
   m_ObjectHideFlags: 0

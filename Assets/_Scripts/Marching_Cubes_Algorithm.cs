@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Marching_Cubes_Algorithm
 {
+    public Vector3 pivot;
+    public float voxelSize;
     public void meshGeneration(float[,,] voxels, Vector3 pivot, float voxelSize, float isoLevel, List<Vector3> vertices, List<int> triangles)
     {
+        this.pivot = pivot;
+        this.voxelSize = voxelSize;
         for (int x = 0; x < voxels.GetLength(0) - 1; x++)
         {
             for (int y = 0; y < voxels.GetLength(1) - 1; y++)
             {
                 for (int z = 0; z < voxels.GetLength(2) - 1; z++)
                 {
-                    var tris = MarchCube(new Vector3Int(x, y, z), voxels, pivot, voxelSize, isoLevel);
+                    var tris = MarchCube(new Vector3Int(x, y, z), voxels, isoLevel);
 
                     if (tris == null || tris.Length == 0)
                         continue;
@@ -29,7 +33,7 @@ public class Marching_Cubes_Algorithm
             }
         }
     }
-    Vector3[] MarchCube(Vector3Int pos, float[,,] voxels, Vector3 pivot, float voxelSize, float isoLevel)
+    Vector3[] MarchCube(Vector3Int pos, float[,,] voxels, float isoLevel)
     {
         //summary
         // for each selected corner from 0 to 7, is essentially 76543210, now for each selected edge, we mark it as 1, otherwise 0,
@@ -86,13 +90,17 @@ public class Marching_Cubes_Algorithm
         for (int i = 0; Tables.triangleTable[cubeIndex, i] != -1; i++)
         {
             currentIndex = Tables.triangleTable[cubeIndex, i];
-            trianglesList.Add((vertList[currentIndex] + pivot) * voxelSize);
+            trianglesList.Add(vertList[currentIndex]);
         }
 
         return trianglesList.ToArray(); // Return the triangle vertices in triangle order
     }
     Vector3 VertexInterp(float isoLevel, Vector3 p1, Vector3 p2, float valp1, float valp2)
     {
+        p1 += pivot;
+        p1 *= voxelSize;
+        p2 += pivot;
+        p2 *= voxelSize;
         const float EPS = 1e-6f;
         if (Mathf.Abs(isoLevel - valp1) < EPS)
             return p1;

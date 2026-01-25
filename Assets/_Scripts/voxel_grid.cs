@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class voxel_grid : MonoBehaviour
@@ -17,6 +16,7 @@ public class voxel_grid : MonoBehaviour
 
     MeshFilter meshFilter;
     [SerializeField] Mesh mesh;
+    public bool update = true;
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -50,30 +50,47 @@ public class voxel_grid : MonoBehaviour
     }
     private void Update()
     {
-        updateVoxel();
-        UpdateMesh();
+        if (update)
+        {
+            updateVoxel();
+            UpdateMesh();
+        }
     }
     void updateVoxel()
     {
+        voxels = new float[gridSizeX, gridSizeY, gridSizeZ];
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)
             {
                 for (int z = 0; z < gridSizeZ; z++)
                 {
-                    voxels[x, y, z] = voxelValue((new Vector3(x, y, z) + pivotT.position) * voxelSize);
+                    voxels[x, y, z] = voxelValue(new Vector3(x, y, z));
                 }
             }
         }
     }
     public float radius = 3.0f;
+    public float noiseStrength = 0.05f;
     float voxelValue(Vector3 voxelPos)
     {
-        for (int i = 0; i < centerOfSphereT.Length; i++)
-        {
-            if (inSphere(voxelPos, centerOfSphereT[i].position, radius)) return 1;
-        }
-        return 0;
+        if (bounds(voxelPos)) return 0;
+
+        voxelPos += pivotT.position;
+        voxelPos *= voxelSize;
+        voxelPos *= noiseStrength;
+        return Perlin.Perlin3D(voxelPos);
+
+        //for (int i = 0; i < centerOfSphereT.Length; i++)
+        //{
+        //    if (inSphere(voxelPos, centerOfSphereT[i].position, radius)) return 1;
+        //}
+        //return 0;
+    }
+    bool bounds(Vector3 voxelPos)
+    {
+        if (voxelPos.x <= 0 || voxelPos.x >= gridSizeX - 1 || voxelPos.y <= 0 || voxelPos.y >= gridSizeY - 1 || voxelPos.z <= 0 || voxelPos.z >= gridSizeZ - 1) return true;
+        return false;
     }
     bool inSphere(Vector3 p, Vector3 center, float radius)
     {
