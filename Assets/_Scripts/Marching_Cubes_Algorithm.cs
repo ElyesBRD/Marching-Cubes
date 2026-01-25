@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +5,8 @@ public class Marching_Cubes_Algorithm
 {
     public Vector3 pivot;
     public float voxelSize;
+    Dictionary<Vector3, int> vertexIndices = new Dictionary<Vector3, int>();
+    List<int> triangles = new List<int>();
     public void meshGeneration(float[,,] voxels, Vector3 pivot, float voxelSize, float isoLevel, List<Vector3> vertices, List<int> triangles)
     {
         this.pivot = pivot;
@@ -16,24 +17,14 @@ public class Marching_Cubes_Algorithm
             {
                 for (int z = 0; z < voxels.GetLength(2) - 1; z++)
                 {
-                    var tris = MarchCube(new Vector3Int(x, y, z), voxels, isoLevel);
-
-                    if (tris == null || tris.Length == 0)
-                        continue;
-
-                    int baseIndex = vertices.Count;
-
-                    vertices.AddRange(tris);
-
-                    for (int i = 0; i < tris.Length; i++)
-                    {
-                        triangles.Add(baseIndex + i);
-                    }
+                    MarchCube(new Vector3Int(x, y, z), voxels, isoLevel);
                 }
             }
         }
+        vertices.AddRange(vertexIndices.Keys);
+        triangles.AddRange(this.triangles);
     }
-    Vector3[] MarchCube(Vector3Int pos, float[,,] voxels, float isoLevel)
+    void MarchCube(Vector3Int pos, float[,,] voxels, float isoLevel)
     {
         //summary
         // for each selected corner from 0 to 7, is essentially 76543210, now for each selected edge, we mark it as 1, otherwise 0,
@@ -58,7 +49,7 @@ public class Marching_Cubes_Algorithm
         //summary
         int edges = Tables.edgeTable[cubeIndex];
         if (edges == 0)
-            return Array.Empty<Vector3>(); // No intersection
+            return;
 
         Vector3[] vertList = new Vector3[12];
 
@@ -86,14 +77,22 @@ public class Marching_Cubes_Algorithm
         // and we are essentially sorting the vertList into the trianglesList, so it can play both the vertices and the traingels for the mesh at the same time.
         //summary
         int currentIndex = 0;
-        List<Vector3> trianglesList = new List<Vector3>();
         for (int i = 0; Tables.triangleTable[cubeIndex, i] != -1; i++)
         {
             currentIndex = Tables.triangleTable[cubeIndex, i];
-            trianglesList.Add(vertList[currentIndex]);
-        }
 
-        return trianglesList.ToArray(); // Return the triangle vertices in triangle order
+            if (vertexIndices.TryGetValue(vertList[currentIndex], out int index))
+            {
+                // Vertex already exists, use its index
+                triangles.Add(index);
+            }
+            else
+            {
+                // New vertex, add it to the dictionary
+                vertexIndices[vertList[currentIndex]] = vertexIndices.Count;
+                triangles.Add(vertexIndices.Count - 1);
+            }
+        }
     }
     Vector3 VertexInterp(float isoLevel, Vector3 p1, Vector3 p2, float valp1, float valp2)
     {
