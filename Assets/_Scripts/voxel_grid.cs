@@ -41,6 +41,7 @@ public class voxel_grid : MonoBehaviour
         mesh = new Mesh();
 
         mesh.Clear();
+        mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();
