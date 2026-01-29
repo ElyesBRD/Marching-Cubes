@@ -532,7 +532,7 @@ MonoBehaviour:
   update: 1
   radius: 14.38
   noiseStrength: 0.03
-  extra: 3
+  extra: 6
   canDraw: 0
 --- !u!4 &1794354087
 Transform:

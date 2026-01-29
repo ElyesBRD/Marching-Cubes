@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class voxel_grid : MonoBehaviour
@@ -78,30 +79,24 @@ public class voxel_grid : MonoBehaviour
     {
         if (bounds(voxelPos)) return 0;
 
-        //voxelPos += pivotT.position;
-        //voxelPos *= voxelSize;
-        //voxelPos *= noiseStrength;
-        //return Perlin.Perlin3D(voxelPos);
+        //return Perlin.Perlin3D((voxelPos + pivotT.position) * voxelSize * noiseStrength);
 
         //for (int i = 0; i < centerOfSphereT.Length; i++)
         //{
-        //    if (inSphere(voxelPos, centerOfSphereT[i].position, radius)) return 1;
+        //    if (TerrainGeneration.inSphere(voxelPos, centerOfSphereT[i].position, radius)) return 1;
         //}
         //return 0;
-        return TerrainGeneration.GetTerrainHeight(voxelPos,noiseStrength,extra);
-        
-        //var fr = radius - Vector3.Distance(voxelPos, centerOfSphereT[0].position);
-        //return fr + Perlin.Perlin3D(voxelPos * noiseStrength)*extra;
+
+        return TerrainGeneration.GetTerrainHeight(voxelPos, noiseStrength, extra);
+
+        //return TerrainGeneration.sphericalPlanetNoise(voxelPos, centerOfSphereT[0].position, radius, noiseStrength, extra);
     }
     bool bounds(Vector3 voxelPos)
     {
         if (voxelPos.x <= 0 || voxelPos.x >= gridSizeX - 1 || voxelPos.y <= 0 || voxelPos.y >= gridSizeY - 1 || voxelPos.z <= 0 || voxelPos.z >= gridSizeZ - 1) return true;
         return false;
     }
-    bool inSphere(Vector3 p, Vector3 center, float radius)
-    {
-        return (p - center).magnitude < radius;
-    }
+
     float sphereR = 0.1f;
     public bool canDraw = true;
     void OnDrawGizmos()
