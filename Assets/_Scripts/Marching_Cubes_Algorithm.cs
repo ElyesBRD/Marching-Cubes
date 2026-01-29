@@ -67,14 +67,11 @@ public class Marching_Cubes_Algorithm
         if ((edges & 1024) != 0) vertList[10]=(VertexInterp(isoLevel, new Vector3(pos.x + 1, pos.y + 1, pos.z), new Vector3(pos.x + 1, pos.y + 1, pos.z + 1), voxels[pos.x + 1, pos.y + 1, pos.z], voxels[pos.x + 1, pos.y + 1, pos.z + 1]));
         if ((edges & 2048) != 0) vertList[11]=(VertexInterp(isoLevel, new Vector3(pos.x, pos.y + 1, pos.z), new Vector3(pos.x, pos.y + 1, pos.z + 1), voxels[pos.x, pos.y + 1, pos.z], voxels[pos.x, pos.y + 1, pos.z + 1]));
 
-        // now after creating the vertices, we must create the triangles using the triangle table, since each 3 vertices make up a triangle
-
         //summary
         // we got the cubeIndex that tells us wich edges are selected, which means now we do know wich vertices each traingle uses up in the vertList,
         // Tables.triangleTable[cubeIndex] gives us the necessary indecies that we must use from the vertList to create a triangle,
         // Tables.triangleTable[cubeIndex,i] eterate throughout the indecies until it encounters -1, wich means the end of the triangle list for that cubeIndex,
-        // for each 3 indecies we create a triangle that we store for the mesh,
-        // and we are essentially sorting the vertList into the trianglesList, so it can play both the vertices and the traingels for the mesh at the same time.
+        // for each 3 indecies we create a triangle and store it in the triangle list and we save the vertices in a dictionarry with its index so we can re use them for triangle connection,
         //summary
         int currentIndex = 0;
         for (int i = 0; Tables.triangleTable[cubeIndex, i] != -1; i++)

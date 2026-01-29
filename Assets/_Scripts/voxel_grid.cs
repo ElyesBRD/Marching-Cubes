@@ -73,20 +73,25 @@ public class voxel_grid : MonoBehaviour
     }
     public float radius = 3.0f;
     public float noiseStrength = 0.05f;
+    public float extra;
     float voxelValue(Vector3 voxelPos)
     {
         if (bounds(voxelPos)) return 0;
 
-        voxelPos += pivotT.position;
-        voxelPos *= voxelSize;
-        voxelPos *= noiseStrength;
-        return Perlin.Perlin3D(voxelPos);
+        //voxelPos += pivotT.position;
+        //voxelPos *= voxelSize;
+        //voxelPos *= noiseStrength;
+        //return Perlin.Perlin3D(voxelPos);
 
         //for (int i = 0; i < centerOfSphereT.Length; i++)
         //{
         //    if (inSphere(voxelPos, centerOfSphereT[i].position, radius)) return 1;
         //}
         //return 0;
+        return TerrainGeneration.GetTerrainHeight(voxelPos,noiseStrength,extra);
+        
+        //var fr = radius - Vector3.Distance(voxelPos, centerOfSphereT[0].position);
+        //return fr + Perlin.Perlin3D(voxelPos * noiseStrength)*extra;
     }
     bool bounds(Vector3 voxelPos)
     {
