@@ -75,6 +75,7 @@ public class voxel_grid : MonoBehaviour
     public float radius = 3.0f;
     public float noiseStrength = 0.05f;
     public float extra;
+    public float minDistanceFromSurface = 0.1f;
     float voxelValue(Vector3 voxelPos)
     {
         if (bounds(voxelPos)) return 0;
@@ -87,9 +88,9 @@ public class voxel_grid : MonoBehaviour
         //}
         //return 0;
 
-        return TerrainGeneration.GetTerrainHeight(voxelPos, noiseStrength, extra);
+        //return TerrainGeneration.GetTerrainHeight(voxelPos, noiseStrength, extra);
 
-        //return TerrainGeneration.sphericalPlanetNoise(voxelPos, centerOfSphereT[0].position, radius, noiseStrength, extra);
+        return TerrainGeneration.sphericalPlanetNoise((voxelPos + pivotT.position) * voxelSize, centerOfSphereT[0].position, radius, noiseStrength, extra, minDistanceFromSurface);
     }
     bool bounds(Vector3 voxelPos)
     {

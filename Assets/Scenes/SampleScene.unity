@@ -155,8 +155,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -179,7 +179,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 94.4
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 4.92, y: 20.66, z: -16.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -433,7 +433,7 @@ Transform:
   m_GameObject: {fileID: 442879262}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.7, y: 27, z: 31.4}
+  m_LocalPosition: {x: 21.3, y: 19.1, z: 20.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -519,9 +519,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28459cf4e70eca444b5a85e7e520568e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSizeX: 60
-  gridSizeY: 16
-  gridSizeZ: 60
+  gridSizeX: 40
+  gridSizeY: 40
+  gridSizeZ: 40
   voxelSize: 1
   isoLevel: 0.5
   pivotT: {fileID: 1794354087}
@@ -530,9 +530,10 @@ MonoBehaviour:
   - {fileID: 338240969}
   mesh: {fileID: 0}
   update: 1
-  radius: 14.38
-  noiseStrength: 0.03
-  extra: 6
+  radius: 13
+  noiseStrength: 0.245
+  extra: 1.01
+  minDistanceFromSurface: 5.44
   canDraw: 0
 --- !u!4 &1794354087
 Transform:

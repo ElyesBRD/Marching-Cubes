@@ -11,9 +11,12 @@ public class TerrainGeneration
     {
         return (p - center).magnitude < radius;
     }
-    public static float sphericalPlanetNoise(Vector3 voxelPos, Vector3 center, float radius, float noiseStrength, float noiseOffsetFromRadius)
+    public static float sphericalPlanetNoise(Vector3 voxelPos, Vector3 center, float radius, float noiseDensity, float noiseStrength, float minDistanceFromSurface)
     {
-        var fr = radius - Vector3.Distance(voxelPos, center);
-        return fr + Perlin.Perlin3D(voxelPos * noiseStrength) * noiseOffsetFromRadius;
+        var height = Vector3.Distance(voxelPos, center);
+        if (height <= radius) return 1;
+        if (height > radius + minDistanceFromSurface) return 0;
+        var noiseValue = Perlin.Perlin3D((voxelPos) * noiseDensity) * noiseStrength;
+        return noiseValue;
     }
 }
