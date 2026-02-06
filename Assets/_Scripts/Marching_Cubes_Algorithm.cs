@@ -5,8 +5,13 @@ public class Marching_Cubes_Algorithm
 {
     public Vector3 pivot;
     public float voxelSize;
-    Dictionary<Vector3, int> vertexIndices = new Dictionary<Vector3, int>();
-    List<int> triangles = new List<int>();
+    Dictionary<Vector3, int> vertexIndices;
+    List<int> triangles;
+    public Marching_Cubes_Algorithm()
+    {
+        vertexIndices = new Dictionary<Vector3, int>();
+        triangles = new List<int>();
+    }
     public void meshGeneration(float[,,] voxels, Vector3 pivot, float voxelSize, float isoLevel, List<Vector3> vertices, List<int> triangles)
     {
         this.pivot = pivot;

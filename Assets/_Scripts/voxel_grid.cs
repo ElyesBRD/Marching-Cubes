@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 public class voxel_grid : MonoBehaviour
@@ -14,6 +13,7 @@ public class voxel_grid : MonoBehaviour
     private float[,,] voxels;
     public Transform pivotT;
     public Transform[] centerOfSphereT;
+    public terrainColorSetting colorSettings;
 
     MeshFilter meshFilter;
     [SerializeField] Mesh mesh;
@@ -40,13 +40,27 @@ public class voxel_grid : MonoBehaviour
         mc.meshGeneration(voxels, pivotT.position, voxelSize, isoLevel, vertices, triangles);
 
         mesh = new Mesh();
-
+        
         mesh.Clear();
         mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
+
+        var colors = new Color[vertices.Count];
+        for (int i = 0; i < vertices.Count; i++)
+        {
+            for (int j = 0; j < colorSettings.height.Length; j++)
+            {
+                if (Vector3.Distance(vertices[i], meshFilter.transform.InverseTransformPoint(centerOfSphereT[0].position)) <= colorSettings.height[j])
+                {
+                    colors[i] = colorSettings.color[j];
+                    break;
+                }
+            } 
+        }
+        mesh.colors = colors;
 
         meshFilter.mesh = mesh;
     }

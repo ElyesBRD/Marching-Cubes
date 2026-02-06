@@ -497,9 +497,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1794354087}
-  - component: {fileID: 1794354086}
   - component: {fileID: 1794354089}
   - component: {fileID: 1794354088}
+  - component: {fileID: 1794354086}
+  - component: {fileID: 1794354090}
   m_Layer: 0
   m_Name: Voxel Grid
   m_TagString: Untagged
@@ -528,6 +529,7 @@ MonoBehaviour:
   centerOfSphereT:
   - {fileID: 442879263}
   - {fileID: 338240969}
+  colorSettings: {fileID: 1794354090}
   mesh: {fileID: 0}
   update: 1
   radius: 13
@@ -575,7 +577,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b094fc12b87644c4b82bef764980573a, type: 2}
+  - {fileID: 2100000, guid: 946d1e03ec17fb54b9521be1e26abaa3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -605,6 +607,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794354085}
   m_Mesh: {fileID: 0}
+--- !u!114 &1794354090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794354085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b1c9663f499d47822626488513f3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height:
+  - 14
+  - 16.8
+  color:
+  - {r: 0.54509807, g: 0, b: 1, a: 0}
+  - {r: 0, g: 0.5254902, b: 0.38220447, a: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
