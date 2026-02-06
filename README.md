@@ -1,9 +1,15 @@
 # Marching Cubes
 This is a marching cubes algorithm that is used for precedural mesh generation in Unity C#.
-I tackled this problem with the help of this paper https://paulbourke.net/geometry/polygonise/
-Currently the goal of this project is optimizing this algorithm to max effeciency to handle large grid size,
-and use that for procedural planet generation.
-Currently the algorithm work using the cpu but i intend to create the mesh using the gpu, comming soon..
 
+example use for a 3d perline noise:
 <img width="785" height="419" alt="Screenshot 2026-02-01 164758" src="https://github.com/user-attachments/assets/4d8d0cc5-4d63-46ae-ad97-536c06c1605c" />
-<img width="598" height="502" alt="Screenshot 2026-02-01 181554" src="https://github.com/user-attachments/assets/4f2f14b5-2fed-407c-b091-b31c5e52795f" />
+
+example use for a procedural planet generation: </br>
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/b8ea5bc9-1594-41cf-8db8-6ac968d77987" />
+
+# What is it
+I tackled this problem with the help of this paper "https://paulbourke.net/geometry/polygonise/", it is really helpfull at explaining all the necessary details.
+
+# Goal
+Currently the goal of this project is optimizing the algorithm to max effeciency to handle large grid size generation,
+and to apply this algorithm for procedural terrain and planet generation.
